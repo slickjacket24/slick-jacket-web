@@ -7,3 +7,7 @@ section{padding:3.5rem 0}section.alt{background:#f4f6f7}h2{font-weight:800;color
 .placeholder{border:2px dashed #c0392b;color:#c0392b;padding:1rem;border-radius:8px;font-weight:700;text-align:center}
 footer{background:#1d2b36;color:#cfd8dc;padding:2rem 0;font-size:.9rem}footer a{color:#fff}
 @media(max-width:576px){.nav-top .links{display:none}section{padding:2.5rem 0}.hero{padding:3.5rem 0 3rem}}
+
+.btn-secondary{background:transparent;color:#1d2b36;font-weight:700;border:2px solid #2f5d62;padding:.7rem 1.3rem;border-radius:8px;text-decoration:none;display:inline-block}
+.hero .btn-secondary{color:#fff;border-color:rgba(255,255,255,.75)}
+.hero .btn-secondary:hover{border-color:#fff;color:#fff}
