@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://slickjacket24.github.io/slick-jacket-web/sitemap.xml
