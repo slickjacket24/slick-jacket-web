@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vulcan X Calculator Bench</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#111827;--mu:#6b7280;--ac:#b45309;--bd:#e5e7eb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f172a;--card:#1e293b;--tx:#e5e7eb;--mu:#94a3b8;--ac:#fbbf24;--bd:#334155}}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px system-ui,sans-serif;padding:16px;max-width:900px;margin-inline:auto}
+h1{font-size:18px}p.n{color:var(--mu);font-size:12px}nav{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+button{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:6px 10px;cursor:pointer}button.on{border-color:var(--ac);color:var(--ac);font-weight:600}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}label{font-size:11px;color:var(--mu);display:flex;flex-direction:column;gap:2px}
+input,select{padding:6px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--tx)}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px;margin-top:12px}.r{display:flex;justify-content:space-between;border-bottom:1px solid var(--bd);padding:5px 0;font-family:ui-monospace,monospace;font-size:13px}.r b{color:var(--ac)}.w{color:#b91c1c;font-size:12px;margin-top:8px}
+a{color:var(--ac)}
+</style>
+</head>
+<body>
+<h1>Vulcan X Calculator Bench</h1>
+<p class="n">The real calculator code from the app, running standalone. Screening estimates only: verify against the governing standard and your qualified procedures before use.</p>
+<p class="n">The full Vulcan X is $199 on Gumroad: <a href="https://maxwellian385.gumroad.com/l/qicjzr">https://maxwellian385.gumroad.com/l/qicjzr</a></p>
+<nav id="nav"></nav>
+<div class="c"><div class="g" id="f"></div></div>
+<div class="c" id="o"></div>
+<script>var VX=(()=>{var N=Object.defineProperty;var C=Object.getOwnPropertyDescriptor;var R=Object.getOwnPropertyNames;var P=Object.prototype.hasOwnProperty;var L=(n,e)=>{for(var r in e)N(n,r,{get:e[r],enumerable:!0})},H=(n,e,r,a)=>{if(e&&typeof e=="object"||typeof e=="function")for(let o of R(e))!P.call(n,o)&&o!==r&&N(n,o,{get:()=>e[o],enumerable:!(a=C(e,o))||a.enumerable});return n};var E=n=>H(N({},"__esModule",{value:!0}),n);var D={};L(D,{calculateBearingLife:()=>S,calculateBoltTorque:()=>T,calculateCarbonEquivalent:()=>w,calculateHydraulics:()=>q,calculateMotorDiagnostics:()=>K,calculateWeldingHeatInput:()=>k});function k(n){let{voltage:e,amperage:r,travelSpeed:a,processEfficiency:o}=n,c=Math.max(10,a),u=60*e*r/(1e3*c),t=u*o,b=t*25.4,p=Math.max(1.2,Number((4.8*Math.pow(t,1.6)).toFixed(1))),s="Optimal Structural";return t<.7?s="Low Heat Input":t>2.4&&(s="High Heat Input / Grain Coarsening Risk"),{grossArcEnergyKJPerMm:Number(u.toFixed(3)),netHeatInputKJPerMm:Number(t.toFixed(3)),netHeatInputKJPerInch:Number(b.toFixed(1)),coolingTimeT85SecEstimated:p,weldingCategory:s}}function w(n){let{carbon:e,manganese:r,chromium:a,molybdenum:o,vanadium:c,nickel:u,copper:t,silicon:b,boron:p,thicknessMm:s,diffusibleHydrogenMlPer100g:m}=n,i=e+r/6+(a+o+c)/5+(u+t)/15,h=e+b/30+(r+t+a)/20+u/60+o/15+c/10+5*p,l=e+(r+o)/10+(a+t)/20+u/40,M=Math.max(.5,n.heatInputKJPerMm??1),f=Math.max(1,s),g=Math.max(1,m),d=[];(l<.2||l>.5)&&d.push(`CET ${l.toFixed(2)} outside 0.20-0.50`),e>.25&&d.push("C > 0.25 %"),(s<10||s>90)&&d.push("thickness outside 10-90 mm"),(m<1||m>20)&&d.push("HD outside 1-20 ml/100 g"),(M<.5||M>4)&&d.push("arc energy outside 0.5-4.0 kJ/mm");let v=d.length>0,x=697*l+160*Math.tanh(f/35)+62*Math.pow(g,.35)+(53*l-32)*M-328;x=Math.max(20,x);let y="Moderate (Light preheat)";i<.4&&h<.22?y="Excellent (No preheat needed)":(i>.55||h>.28)&&(y="Severe Cracking Risk (Mandatory high preheat & H4)");let I=Math.round(x/10)*10,F=Math.round(I*1.8+32);return{ceIIW:Number(i.toFixed(3)),pcm:Number(h.toFixed(3)),weldabilityRisk:y,recommendedMinPreheatC:I,recommendedMinPreheatF:F,recommendedPostSoakTempC:Math.max(180,I),cet:Number(l.toFixed(3)),preheatMethod:"EN 1011-2:2001 Annex C.3 Method B (CET / Yurioka-Bailey)",outsideValidityRange:v,validityNotes:d}}function K(n){let{hp:e,voltage:r,efficiency:a,powerFactor:o,measuredIa:c,measuredIb:u,measuredIc:t}=n,b=Math.max(110,r),p=Math.max(.5,Math.min(.99,a)),s=Math.max(.5,Math.min(1,o)),m=e*746/(Math.sqrt(3)*b*s*p),i=(c+u+t)/3,h=Math.abs(c-i),l=Math.abs(u-i),M=Math.abs(t-i),f=Math.max(h,l,M),g=i>0?f/i*100:0,d=m>0?i/m*100:0,v="Acceptable (< 5% current unbalance)",x="Phase currents within normal operating bounds.";return g>=10?(v="Severe Imbalance / Winding Overheating Risk (> 10%)",x="Severe current unbalance (negative-sequence heating). Check line voltages, inspect contactor contacts for pitting, and check winding balance (e.g. insulation/winding resistance tests) before continued operation."):g>=5&&(v="Marginal (5% - 10% current unbalance)",x="Current unbalance above 5%. NEMA MG-1 limits VOLTAGE unbalance to 1% (derate above that); current unbalance typically runs several times higher than voltage unbalance. Measure line voltages, check terminal/lug resistance and contactor contacts."),{ratedFla:Number(m.toFixed(1)),averageCurrent:Number(i.toFixed(1)),maxCurrentDeviation:Number(f.toFixed(1)),currentUnbalancePercent:Number(g.toFixed(1)),estimatedMotorLoadPercent:Number(d.toFixed(1)),severityEvaluation:v,recommendedAction:x}}function S(n){let{rpm:e,dynamicLoadRatingC_kN:r,equivalentRadialLoadP_kN:a,bearingType:o,operatingTempC:c,baseOilViscosityCstAt40C:u}=n,t=Math.max(1,e),b=o==="ball"?3:10/3,p=Math.max(.1,a),s=Math.max(.1,r),m=Math.pow(s/p,b),i=1e6/(60*t)*m,h=i/(24*365),l=u*Math.exp(-.034*(c-40)),M=100,f=t<1e3?45e3*Math.pow(t,-.83)*Math.pow(M,-.5):4500*Math.pow(t,-.5)*Math.pow(M,-.5),g=l/f,d="Full Fluid / EHL (Maximum Life)";return g<.8?d="Boundary Lubrication (High Wear)":g<1.5&&(d="Mixed Lubrication (EP Additives Required)"),{l10RevolutionsMillion:Number(m.toFixed(1)),l10hOperatingHours:Math.round(i),l10hYears24_7:Number(h.toFixed(2)),viscosityAtOperatingTempCst:Number(l.toFixed(1)),viscosityRatioKappa:Number(g.toFixed(2)),lubricationRegime:d}}function q(n){let{boreDiameterMm:e,rodDiameterMm:r,pressureBar:a,flowRateLpm:o}=n,c=e/1e3,u=Math.min(e*.95,r)/1e3,t=a*1e5,b=o/1e3/60,p=Math.PI*Math.pow(c,2)/4,s=Math.PI*(Math.pow(c,2)-Math.pow(u,2))/4,m=t*p,i=t*s,h=m/1e3,l=i/1e3,M=m*.224809,f=i*.224809,g=p>0?b/p*1e3:0,d=s>0?b/s*1e3:0;return{pushForceKN:Number(h.toFixed(1)),pushForceLbf:Math.round(M),pullForceKN:Number(l.toFixed(1)),pullForceLbf:Math.round(f),extendSpeedMmSec:Math.round(g),retractSpeedMmSec:Math.round(d)}}function A(n){let e=[[5,.8],[6,1],[8,1.25],[10,1.5],[12,1.75],[14,2],[16,2],[18,2.5],[20,2.5],[22,2.5],[24,3],[27,3],[30,3.5],[36,4],[42,4.5],[48,5]],r=e[0];for(let a of e)Math.abs(a[0]-n)<Math.abs(r[0]-n)&&(r=a);return r[1]}function T(n){let{nominalDiameterMm:e,threadPitchMm:r,propertyClass:a,lubricationCondition:o}=n,c=640,u=580;a==="10.9"?(c=940,u=830):a==="12.9"?(c=1100,u=970):a==="Grade 5"?(c=635,u=586):a==="Grade 8"&&(c=896,u=827);let t=.2;o==="Light engine oil (K=0.15)"&&(t=.15),o==="Anti-seize paste (K=0.11)"&&(t=.11);let b=e,p=r>0?r:A(b),m=Math.PI/4*Math.pow(b-.9382*p,2)*u,i=.75*m,h=t*i*(b/1e3),l=h*.737562;return{yieldStrengthMpa:c,proofLoadKN:Number((m/1e3).toFixed(1)),recommendedPreloadKN:Number((i/1e3).toFixed(1)),tighteningTorqueNm:Number(h.toFixed(1)),tighteningTorqueFtLbs:Number(l.toFixed(1))}}return E(D);})();
+</script>
+<script>
+var S={weld:{n:"Weld heat input",fn:VX.calculateWeldingHeatInput,f:{voltage:25,amperage:200,travelSpeed:300,processEfficiency:0.8}},
+ce:{n:"Carbon equiv / preheat",fn:VX.calculateCarbonEquivalent,f:{carbon:.2,manganese:1.4,chromium:0,molybdenum:0,vanadium:0,nickel:0,copper:0,silicon:.3,boron:0,thicknessMm:20,diffusibleHydrogenMlPer100g:5,heatInputKJPerMm:1}},
+motor:{n:"Motor current",fn:VX.calculateMotorDiagnostics,f:{hp:50,voltage:460,efficiency:.93,powerFactor:.86,measuredIa:60,measuredIb:62,measuredIc:70}},
+brg:{n:"Bearing L10",fn:VX.calculateBearingLife,f:{rpm:1500,dynamicLoadRatingC_kN:50,equivalentRadialLoadP_kN:5,bearingType:["ball","roller"],operatingTempC:60,baseOilViscosityCstAt40C:68}},
+hyd:{n:"Hydraulic cylinder",fn:VX.calculateHydraulics,f:{boreDiameterMm:100,rodDiameterMm:50,pressureBar:100,flowRateLpm:60}},
+bolt:{n:"Bolt torque",fn:VX.calculateBoltTorque,f:{nominalDiameterMm:16,threadPitchMm:2,propertyClass:["8.8","10.9","12.9","Grade 5","Grade 8"],lubricationCondition:["Dry steel (K=0.20)","Light engine oil (K=0.15)","Anti-seize paste (K=0.11)"]}}};
+var cur="weld",v={};function $(i){return document.getElementById(i)}
+function nav(){$("nav").innerHTML=Object.keys(S).map(function(k){return '<button class="'+(k==cur?"on":"")+'" data-k="'+k+'">'+S[k].n+'</button>'}).join("");
+[].forEach.call($("nav").children,function(b){b.onclick=function(){cur=b.dataset.k;form()}})}
+function parseNumericInput(raw){
+  if(raw==null) return {kind:"empty"};
+  var s=String(raw);
+  if(s.trim()==="") return {kind:"empty"};
+  var n=parseFloat(s);
+  if(!Number.isFinite(n)) return {kind:"invalid"};
+  return {kind:"ok",value:n};
+}
+function validateInputs(){
+  var msgs=[],keys=Object.keys(S[cur].f);
+  for(var j=0;j<keys.length;j++){
+    var k=keys[j],d=S[cur].f[k];
+    if(Array.isArray(d)) continue;
+    var x=v[k];
+    if(x===null||typeof x==="undefined"){msgs.push(k+" needs a number.");continue}
+    if(!Number.isFinite(x)){msgs.push(k+" is not a valid number.");continue}
+    if(k==="operatingTempC"){
+      if(x<-273.15) msgs.push("operatingTempC can't be below -273.15.");
+    }else if(x<0){
+      msgs.push(k+" can't be negative.");
+    }
+    if(k==="processEfficiency"&&(x<0||x>1)) msgs.push("processEfficiency must be between 0 and 1.");
+    if(k==="nominalDiameterMm"&&x===0) msgs.push("nominalDiameterMm must be greater than 0.");
+  }
+  return msgs;
+}
+function clampNotes(){
+  var n=[],x=v;
+  if(cur==="weld"){
+    if(Number.isFinite(x.travelSpeed)&&x.travelSpeed<10) n.push("travelSpeed below 10 is treated as 10 in this estimate.");
+  }
+  if(cur==="motor"){
+    if(Number.isFinite(x.voltage)&&x.voltage<110) n.push("voltage below 110 is treated as 110 in this estimate.");
+    if(Number.isFinite(x.efficiency)&&(x.efficiency<0.5||x.efficiency>0.99)) n.push("efficiency is limited to the range 0.50–0.99 in this estimate.");
+    if(Number.isFinite(x.powerFactor)&&(x.powerFactor<0.5||x.powerFactor>1)) n.push("powerFactor is limited to the range 0.50–1.00 in this estimate.");
+  }
+  if(cur==="brg"){
+    if(Number.isFinite(x.rpm)&&x.rpm<1) n.push("rpm below 1 is treated as 1 in this estimate.");
+    if(Number.isFinite(x.dynamicLoadRatingC_kN)&&x.dynamicLoadRatingC_kN<0.1) n.push("dynamicLoadRatingC_kN below 0.1 is treated as 0.1 in this estimate.");
+    if(Number.isFinite(x.equivalentRadialLoadP_kN)&&x.equivalentRadialLoadP_kN<0.1) n.push("equivalentRadialLoadP_kN below 0.1 is treated as 0.1 in this estimate.");
+  }
+  if(cur==="ce"){
+    if(Number.isFinite(x.thicknessMm)&&x.thicknessMm<1) n.push("thicknessMm below 1 is treated as 1 in this estimate.");
+    if(Number.isFinite(x.diffusibleHydrogenMlPer100g)&&x.diffusibleHydrogenMlPer100g<1) n.push("diffusibleHydrogenMlPer100g below 1 is treated as 1 in this estimate.");
+    if(Number.isFinite(x.heatInputKJPerMm)&&x.heatInputKJPerMm<0.5) n.push("heatInputKJPerMm below 0.5 is treated as 0.5 in this estimate.");
+  }
+  if(cur==="hyd"){
+    if(Number.isFinite(x.rodDiameterMm)&&Number.isFinite(x.boreDiameterMm)&&x.rodDiameterMm>x.boreDiameterMm*0.95) n.push("rodDiameterMm above 95% of the bore is treated as 95% of the bore in this estimate.");
+  }
+  if(cur==="bolt"){
+    if(Number.isFinite(x.threadPitchMm)&&!(x.threadPitchMm>0)) n.push("threadPitchMm of 0 is replaced with the nearest ISO coarse pitch in this estimate.");
+  }
+  return n;
+}
+function form(){nav();var f=S[cur].f;v={};$("f").innerHTML="";Object.keys(f).forEach(function(k){var d=f[k],l=document.createElement("label");l.textContent=k;var i;
+if(Array.isArray(d)){i=document.createElement("select");d.forEach(function(o){i.add(new Option(o,o))});v[k]=d[0]}else{i=document.createElement("input");i.type="number";i.step="any";i.value=d;if(k!=="operatingTempC")i.min="0";v[k]=d}
+i.oninput=function(){if(Array.isArray(d)){v[k]=i.value;run();return}var p=parseNumericInput(i.value);if(p.kind==="empty")v[k]=null;else if(p.kind==="invalid")v[k]=NaN;else v[k]=p.value;run()};l.appendChild(i);$("f").appendChild(l)});run()}
+function run(){
+  var msgs=validateInputs();
+  if(msgs.length){$("o").innerHTML='<div class="w">'+msgs.join("<br>")+"</div>";return}
+  var r=S[cur].fn(v),bad=[];
+  Object.keys(r).forEach(function(k){var x=r[k];if(typeof x==="number"&&!Number.isFinite(x))bad.push(k)});
+  if(bad.length){$("o").innerHTML='<div class="w">That input is too large or not valid; the estimate can\'t be shown ('+bad.join(", ")+").</div>";return}
+  var h="";
+  Object.keys(r).forEach(function(k){var x=r[k];if(k=="validityNotes")return;h+='<div class="r"><span>'+k+"</span><b>"+(typeof x=="object"?JSON.stringify(x):x)+"</b></div>"});
+  if(r.outsideValidityRange)h+='<div class="w">Indicative only: outside method validity ('+r.validityNotes.join("; ")+"). Follow the qualified WPS.</div>";
+  var notes=clampNotes();
+  if(notes.length)h+='<div class="w">'+notes.join(" ")+"</div>";
+  $("o").innerHTML=h;
+}
+form();
+</script>
+</body>
+</html>
