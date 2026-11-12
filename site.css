@@ -11,3 +11,9 @@ footer{background:#1d2b36;color:#cfd8dc;padding:2rem 0;font-size:.9rem}footer a{
 .btn-secondary{background:transparent;color:#1d2b36;font-weight:700;border:2px solid #2f5d62;padding:.7rem 1.3rem;border-radius:8px;text-decoration:none;display:inline-block}
 .hero .btn-secondary{color:#fff;border-color:rgba(255,255,255,.75)}
 .hero .btn-secondary:hover{border-color:#fff;color:#fff}
+
+/* Accessibility pass 2026-11-12: darker link color for 4.5:1 contrast on white and light-gray sections; skip link */
+:root{--bs-link-color:#b8461f;--bs-link-hover-color:#8f3417}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#f4a259;color:#1d2b36;font-weight:800;padding:.6rem 1rem;border-radius:0 0 8px 0;text-decoration:none}
+.skip-link:focus{left:0}
+.hero a:not([class]){color:#ffc48f}.hero a:not([class]):hover{color:#fff}
