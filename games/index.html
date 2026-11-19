@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101820">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Free browser games from Slick Jacket Games. Play on desktop or phone. Made by Slick Jacket with AI.">
+  <title>Free Browser Games | Slick Jacket Games</title>
+  <style>
+    :root {
+      --bg: #101820;
+      --bg-card: #18222b;
+      --bg-flag: #2a1f18;
+      --line: #2c3c46;
+      --text: #e6ecef;
+      --muted: #a8b4ba;
+      --accent: #f4a259;
+      --accent-ink: #1d2b36;
+      --badge: #1e3a3a;
+      --badge-ink: #9ee1d4;
+      --soon: #2a3138;
+      --proto: #3a3420;
+      --proto-ink: #e6d39a;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 1.0625rem;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 10;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 700;
+      padding: 0.6rem 1rem;
+      border-radius: 0 0 8px 0;
+      text-decoration: none;
+    }
+    .skip:focus { left: 0; }
+    .local-banner {
+      margin: 0;
+      padding: 0.55rem 1rem;
+      background: #3a2a12;
+      color: #f6e3c4;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .wrap {
+      width: min(100% - 2rem, 64rem);
+      margin: 0 auto;
+      padding: 2rem 0 3rem;
+    }
+    .brand {
+      margin: 0 0 0.65rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    h1 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(1.7rem, 4vw, 2.35rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      margin: 0 0 0.75rem;
+      color: var(--muted);
+      max-width: 40rem;
+    }
+    .credit {
+      margin: 0 0 2rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    h2 {
+      margin: 2.1rem 0 0.9rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+      gap: 1rem;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.1rem 1.1rem 1.15rem;
+      min-height: 11.5rem;
+    }
+    article.soon {
+      background: var(--soon);
+    }
+    article h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.08rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    article p {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex: 1;
+    }
+    .badge {
+      display: inline-block;
+      align-self: flex-start;
+      margin: 0 0 0.55rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: var(--badge);
+      color: var(--badge-ink);
+    }
+    .badge.proto {
+      background: var(--proto);
+      color: var(--proto-ink);
+    }
+    .play, .soon-label {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+    }
+    .play {
+      background: var(--accent);
+      color: var(--accent-ink);
+    }
+    .play:hover, .play:focus {
+      filter: brightness(1.08);
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .soon-label {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--line);
+    }
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .site-nav {
+      border-bottom: 1px solid var(--line);
+      background: #152028;
+    }
+    .site-nav-inner {
+      width: min(100% - 2rem, 64rem);
+      margin: 0 auto;
+      padding: 0.7rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1.15rem;
+      align-items: center;
+    }
+    .site-nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .site-nav a:hover, .site-nav a:focus {
+      color: var(--accent);
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .foot-links {
+      margin: 0 0 0.75rem;
+      line-height: 1.7;
+    }
+    .foot-links a, .privacy a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .foot-links a:hover, .foot-links a:focus,
+    .privacy a:hover, .privacy a:focus {
+      color: var(--accent);
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .privacy {
+      margin: 0.75rem 0 0;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#games">Skip to games</a>
+  <p class="local-banner">Local mockup only. Not published.</p>
+  <nav class="site-nav" aria-label="Slick Jacket site">
+    <div class="site-nav-inner">
+      <a href="https://slickjacket24.github.io/slick-jacket-web/">Home</a>
+      <a href="https://slick-site-check.base44.app/" target="_blank" rel="noopener noreferrer">Website Check</a>
+      <a href="https://slickjacket24.github.io/slick-jacket-web/free-tools/">Free tools</a>
+      <a href="https://sebastian-allen-slick-jacket-shop.fourthwall.com/" target="_blank" rel="noopener noreferrer">Store</a>
+      <a href="https://slickjacket24.github.io/slick-jacket-web/links/">Links</a>
+    </div>
+  </nav>
+  <div class="wrap">
+    <header>
+      <p class="brand">Slick Jacket Games</p>
+      <h1>Free browser games</h1>
+      <p class="lead">Slick Jacket games with a public play link, in one place. Play in your browser on a computer or a phone. Itch builds are the newer versions where a game has one.</p>
+      <p class="credit">Made by Slick Jacket with AI.</p>
+    </header>
+
+    <main>
+      <h2 id="games">Play now</h2>
+      <div class="grid">
+        <article>
+          <h3>Junkyard Race Builders</h3>
+          <p>Bolt a car, a ship and a space shuttle together, nail the 3-2-1 launch, and hope it holds.</p>
+          <a class="play" href="https://rosebud.ai/play/wackiest-race-builders" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>ONSLAUGHTER</h3>
+          <p>An isometric bullet-heaven: survive the swarm and stack your firepower.</p>
+          <a class="play" href="https://rosebud.ai/play/onslaughter" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Street Football: The Roguelite</h3>
+          <p>Street American football roguelite. Recruit a squad, win the field, a loss resets the run.</p>
+          <a class="play" href="https://rosebud.ai/play/street-football-the-roguelite" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Snipe the Bad Guys</h3>
+          <p>Retro 3D sniper score attack: pick off waves from the nest in two-minute rounds.</p>
+          <a class="play" href="https://rosebud.ai/play/snipe-the-bad-guys" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <span class="badge">Newer itch build</span>
+          <h3>Drop or Don't</h3>
+          <p>One decision. Two choices. A quirky browser game where hesitation is part of the fun.</p>
+          <a class="play" href="https://slick-jacket.itch.io/drop-or-dont1" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Click Count</h3>
+          <p>A black screen, a white number, and every click counts.</p>
+          <a class="play" href="https://rosebud.ai/play/click-count-1" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Desktop Solitaire</h3>
+          <p>Classic solitaire, laid out on a desktop.</p>
+          <a class="play" href="https://rosebud.ai/play/windows-solitaire" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <span class="badge">Newer itch build</span>
+          <h3>Find and Fight the Chicken Monster</h3>
+          <p>A choice-driven roguelike deckbuilder on the Path of the Cluckening.</p>
+          <a class="play" href="https://slick-jacket.itch.io/find-and-fight-the-chicken-monster" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Erik Saves His Sister</h3>
+          <p>Help Erik save his sister.</p>
+          <a class="play" href="https://rosebud.ai/play/erik-saves-his-sister" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>The Castle Ate Naomi</h3>
+          <p>A Slick Jacket Games story about a castle and Naomi.</p>
+          <a class="play" href="https://rosebud.ai/play/the-castle-ate-naomi" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <span class="badge">Newer itch build</span>
+          <h3>Catapult Trip</h3>
+          <p>Launch, dodge, and survive a psychedelic catapult flight.</p>
+          <a class="play" href="https://slick-jacket.itch.io/catapult-trip" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Clear It!</h3>
+          <p>Clear the board and keep going.</p>
+          <a class="play" href="https://rosebud.ai/play/clear-it" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <span class="badge">Itch only</span>
+          <h3>AquaFlow Puzzle</h3>
+          <p>A physics puzzle: direct the water to the bucket with whatever junk you have on hand.</p>
+          <a class="play" href="https://slick-jacket.itch.io/aquaflow-puzzle" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Along for the Ride</h3>
+          <p>Drive a train on a weird, wholesome journey and pick up characters who each tell a story.</p>
+          <a class="play" href="https://rosebud.ai/play/along-for-the-ride" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Ash Queen's Forge</h3>
+          <p>A live HTML5 boss fight. Not the same game as The Ash Queen: Ascension of the Titan.</p>
+          <a class="play" href="https://hill-oasis-rose-comet.grok.me/" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Ball Guy Finds Himself in a Fantasy Land</h3>
+          <p>A very tall basketball guy, a fantasy arena, and 200 meters of dragonfire. Claim the rim.</p>
+          <a class="play" href="https://rosebud.ai/play/ball-guy-finds-himself-in-a-fantasy-land" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Bounce Box</h3>
+          <p>A short bouncing-box browser game.</p>
+          <a class="play" href="https://rosebud.ai/play/bounce-box-1" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Cheese Climb</h3>
+          <p>Climb the cheese.</p>
+          <a class="play" href="https://rosebud.ai/play/cheese-climb-2" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Choice Spiral</h3>
+          <p>A branching-choice browser game.</p>
+          <a class="play" href="https://rosebud.ai/play/choice-spiral" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Coureld Extraction</h3>
+          <p>An extraction-style browser game.</p>
+          <a class="play" href="https://rosebud.ai/play/coureld-extraction" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Creature Run</h3>
+          <p>Pick and train a creature, then race it in a league against the others.</p>
+          <a class="play" href="https://rosebud.ai/play/creature-run" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>DVMG</h3>
+          <p>Difficult Villager Manager Game. A harsh turn-based village-management roguelike: grow a small village and keep people fed, clean, and reasonably happy.</p>
+          <a class="play" href="https://rosebud.ai/play/dvmg" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Gilded Rite</h3>
+          <p>Rhythm and skill: slide a saucer, plow the cloth, and catch it on the flash.</p>
+          <a class="play" href="https://fair-topaz-brook-birch.grok.me/" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Gods of the Arena</h3>
+          <p>A battle in the arena of the gods.</p>
+          <a class="play" href="https://rosebud.ai/play/gods-of-the-arena" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Jumonp</h3>
+          <p>A short browser game called Jumonp.</p>
+          <a class="play" href="https://rosebud.ai/play/jumonp" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Kaleido</h3>
+          <p>A free browser toy.</p>
+          <a class="play" href="https://amber-winter-autumn-crane.grok.me/" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>King Frog Launcher</h3>
+          <p>A launcher game starring a frog king.</p>
+          <a class="play" href="https://rosebud.ai/play/king-frog-launcher" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Life Choices</h3>
+          <p>A short game about the choices you make.</p>
+          <a class="play" href="https://rosebud.ai/play/life-choices-2" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>MANMON</h3>
+          <p>Pick a monster, train one stat each week, and climb a six-week season toward a tournament.</p>
+          <a class="play" href="https://rosebud.ai/play/manmon" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Mighty Fighty</h3>
+          <p>A 2D auto-battler: draft warriors and creatures, train them, and fight through arena tournaments.</p>
+          <a class="play" href="https://rosebud.ai/play/mighty-fighty" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Outlands</h3>
+          <p>A trip through the outlands.</p>
+          <a class="play" href="https://rosebud.ai/play/outlands" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>PEEL ONION</h3>
+          <p>Peel the onion.</p>
+          <a class="play" href="https://rosebud.ai/play/peel-onion" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <span class="badge proto">Prototype</span>
+          <h3>Pillarfall</h3>
+          <p>A short browser prototype called Pillarfall.</p>
+          <a class="play" href="https://rosebud.ai/play/pillarfall" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Pop Off</h3>
+          <p>A first-person arcade tapper that turns a celebration into bigger and bigger chaos.</p>
+          <a class="play" href="https://rosebud.ai/play/pop-off" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Ring Guess</h3>
+          <p>A short guessing game about rings.</p>
+          <a class="play" href="https://rosebud.ai/play/ring-guess" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Roundtable</h3>
+          <p>A live browser game. This is not a meeting tool.</p>
+          <a class="play" href="https://acre-moss-dawn-urban.grok.me/" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <span class="badge proto">Prototype</span>
+          <h3>Spooky Path</h3>
+          <p>A short spooky-path prototype.</p>
+          <a class="play" href="https://rosebud.ai/play/spooky-path" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Tap Time</h3>
+          <p>A short tap-timing game.</p>
+          <a class="play" href="https://rosebud.ai/play/tap-time" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Umbral Menagerie</h3>
+          <p>A short game set in an umbral menagerie.</p>
+          <a class="play" href="https://rosebud.ai/play/umbral-menagerie" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Vibe Sandwich</h3>
+          <p>A cozy first-person sandwich maker: type an ingredient, prep it, and stack it however you like.</p>
+          <a class="play" href="https://rosebud.ai/play/vibe-sandwich" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>WATCH THE PIZZA</h3>
+          <p>Keep an eye on the pizza.</p>
+          <a class="play" href="https://rosebud.ai/play/watch-the-pizza" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+        <article>
+          <h3>Wordfall</h3>
+          <p>A short falling-words game.</p>
+          <a class="play" href="https://rosebud.ai/play/wordfall-5" target="_blank" rel="noopener noreferrer">Play</a>
+        </article>
+      </div>
+
+      <h2>Downloads</h2>
+      <div class="grid">
+        <article>
+          <span class="badge">Free download</span>
+          <h3>The Ash Queen: Ascension of the Titan</h3>
+          <p>A free 2D boss-fight download. Not the same game as Ash Queen's Forge.</p>
+          <a class="play" href="https://slickjacket24.github.io/slick-jacket-web/free-games/ash-queen/" target="_blank" rel="noopener noreferrer">Download</a>
+        </article>
+      </div>
+
+      <h2>Coming soon</h2>
+      <div class="grid">
+        <article class="soon">
+          <h3>Run Rush</h3>
+          <p>Eighteen gems. One gate. Something behind you is faster than it should be.</p>
+          <span class="soon-label">Coming soon</span>
+        </article>
+        <article class="soon">
+          <h3>Cosmic Traffic Stop</h3>
+          <p>A rusty V8 shopping cart on the cloud highways. Dodge the moon police.</p>
+          <span class="soon-label">Coming soon</span>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <p class="foot-links"><a href="https://slickjacket24.github.io/slick-jacket-web/articles/">Articles</a> &middot; <a href="https://slickjacket24.github.io/slick-jacket-web/faq/">FAQ</a> &middot; <a href="https://slickjacket24.github.io/slick-jacket-web/links/">Links</a> &middot; <a href="https://slickjacket24.github.io/slick-jacket-web/story-family/">Story Family</a> &middot; <a href="https://slickjacket24.github.io/slick-jacket-web/free-tools/">Free tools</a> &middot; <a href="https://slickjacket24.github.io/slick-jacket-web/free-games/">Free games</a> &middot; <a href="https://slickjacket24.github.io/slick-jacket-web/">Home</a></p>
+      <p>Made with AI tools by a real person.</p>
+      <p class="privacy"><a href="https://slickjacket24.github.io/slick-jacket-web/privacy.html">Privacy</a></p>
+    </footer>
+  </div>
+</body>
+</html>
