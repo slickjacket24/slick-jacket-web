@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101820">
+  <meta name="color-scheme" content="dark">
+  <title>Stuff I actually use — Slick Jacket Games</title>
+  <style>
+    :root {
+      --bg: #101820;
+      --bg-card: #18222b;
+      --bg-disclosure: #1a2830;
+      --line: #2c3c46;
+      --text: #e6ecef;
+      --muted: #a8b4ba;
+      --accent: #f4a259;
+      --accent-ink: #1d2b36;
+      --focus: #f4a259;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 1.0625rem;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 10;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 700;
+      padding: 0.6rem 1rem;
+      border-radius: 0 0 8px 0;
+      text-decoration: none;
+    }
+    .skip:focus {
+      left: 0;
+    }
+    .wrap {
+      width: min(100% - 2rem, 36rem);
+      margin: 0 auto;
+      padding: 2rem 0 3rem;
+    }
+    header { margin-bottom: 1.5rem; }
+    .brand {
+      margin: 0 0 0.65rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 5vw, 2.15rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .disclosure {
+      margin: 0 0 0.85rem;
+      padding: 0.95rem 1rem;
+      background: var(--bg-disclosure);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    .offers-note {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .list {
+      display: grid;
+      gap: 0.9rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .card {
+      margin: 0;
+      padding: 1.15rem 1.15rem 1.2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .card h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+    .card p {
+      margin: 0 0 0.55rem;
+      color: var(--text);
+    }
+    .card p:last-of-type { margin-bottom: 0.9rem; }
+    .code {
+      color: var(--muted);
+    }
+    .code strong {
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .disclaimer {
+      margin: 0 0 0.9rem !important;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0.65rem 1.15rem;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 800;
+      font-size: 0.98rem;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+    .btn:hover { filter: brightness(1.06); }
+    .btn:focus-visible,
+    .skip:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+    footer {
+      margin-top: 2.25rem;
+      padding-top: 1.15rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    footer p { margin: 0; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    @media (max-width: 420px) {
+      .wrap { width: min(100% - 1.5rem, 36rem); padding-top: 1.5rem; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <div class="wrap">
+    <header>
+      <p class="brand">Slick Jacket Games</p>
+      <h1>Stuff I actually use</h1>
+    </header>
+    <main id="main">
+      <p class="disclosure">These are my referral links. If you sign up through them, I may get a bonus.</p>
+      <p class="offers-note">Offers can change. The other company page is the one that counts.</p>
+      <ul class="list">
+        <li class="card">
+          <h2>StreamYard</h2>
+          <p>A browser studio for live streams. New sign-ups get $10 in StreamYard credit.</p>
+          <a class="btn" href="https://streamyard.com/pal/c/6345668904943616" target="_blank" rel="noopener noreferrer">Use this link<span class="visually-hidden"> for StreamYard (opens in a new tab)</span></a>
+        </li>
+        <li class="card">
+          <h2>Coinbase</h2>
+          <p>A service for buying, selling, and holding cryptocurrency. <span class="code">Referral code: <strong>WN5DAPF</strong></span></p>
+          <p class="disclaimer">Not financial advice. Investing involves risk.</p>
+          <a class="btn" href="https://coinbase.com/join/WN5DAPF" target="_blank" rel="noopener noreferrer">Use this link<span class="visually-hidden"> for Coinbase (opens in a new tab)</span></a>
+        </li>
+        <li class="card">
+          <h2>RAID Shadow Legends</h2>
+          <p>A mobile fantasy game.</p>
+          <a class="btn" href="https://link.plrm.zone/app/qw97c" target="_blank" rel="noopener noreferrer">Use this link<span class="visually-hidden"> for RAID Shadow Legends (opens in a new tab)</span></a>
+        </li>
+        <li class="card">
+          <h2>Rosebud</h2>
+          <p>A browser tool Slick Jacket Games uses to build some of its games.</p>
+          <a class="btn" href="https://rosebud.ai?referralCode=hZnbiFfI" target="_blank" rel="noopener noreferrer">Use this link<span class="visually-hidden"> for Rosebud (opens in a new tab)</span></a>
+        </li>
+        <li class="card">
+          <h2>Base44</h2>
+          <p>An app builder Slick Jacket Games uses to make some of its web apps.</p>
+          <a class="btn" href="https://app.base44.com/register?ref=J45OEWX40H4JVECV&amp;source=referral_program" target="_blank" rel="noopener noreferrer">Use this link<span class="visually-hidden"> for Base44 (opens in a new tab)</span></a>
+        </li>
+        <li class="card">
+          <h2>Robinhood</h2>
+          <p>An investing app. New sign-ups can claim a stock reward.</p>
+          <p class="disclaimer">Not financial advice. Investing involves risk.</p>
+          <a class="btn" href="https://join.robinhood.com/sebasta-62a70e" target="_blank" rel="noopener noreferrer">Use this link<span class="visually-hidden"> for Robinhood (opens in a new tab)</span></a>
+        </li>
+      </ul>
+    </main>
+    <footer>
+      <p>Made with AI tools by a real person.</p>
+    </footer>
+  </div>
+</body>
+</html>
