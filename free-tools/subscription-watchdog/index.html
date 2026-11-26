@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Subscription Watchdog | Slick Jacket Web Rescue</title>
+<meta name="description" content="A free tool that runs in your browser: choose a CSV export from your bank or card and it looks for recurring charges. Your file is never uploaded. Detection is a best guess.">
+<link rel="canonical" href="https://slickjacket24.github.io/slick-jacket-web/free-tools/subscription-watchdog/">
+<link rel="icon" href="../../favicon.ico">
+<meta property="og:title" content="Subscription Watchdog | Slick Jacket Web Rescue">
+<meta property="og:description" content="A free tool that runs in your browser: choose a CSV export from your bank or card and it looks for recurring charges. Your file is never uploaded. Detection is a best guess.">
+<meta property="og:image" content="https://slickjacket24.github.io/slick-jacket-web/og-image.png">
+<meta property="og:url" content="https://slickjacket24.github.io/slick-jacket-web/free-tools/subscription-watchdog/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://slickjacket24.github.io/slick-jacket-web/og-image.png">
+<style>
+:root{--bg:#f7f7f4;--card:#fff;--ink:#1c1c1a;--mute:#6b6b66;--line:#e4e4de;--acc:#0f766e;--warn:#b45309;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141413;--card:#1e1e1c;--ink:#ecece8;--mute:#9a9a93;--line:#33332f;--acc:#2dd4bf;--warn:#fbbf24}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:26px;margin:8px 0 4px}
+p.sub{color:var(--mute);margin:0 0 18px}
+.drop{display:block;border:2px dashed var(--line);border-radius:14px;padding:28px 16px;text-align:center;background:var(--card);cursor:pointer}
+.drop.on{border-color:var(--acc)}
+.drop b{color:var(--acc)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.card small{color:var(--mute);display:block}
+.card strong{font-size:20px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.row.off{opacity:.45}
+.top{display:flex;justify-content:space-between;gap:10px;font-weight:600}
+.meta{color:var(--mute);font-size:14px;margin-top:2px}
+.soon{color:var(--warn);font-weight:600}
+.act{display:flex;gap:14px;margin-top:8px;font-size:14px;flex-wrap:wrap}
+a,button.l{color:var(--acc);background:none;border:0;padding:0;font:inherit;cursor:pointer;text-decoration:underline}
+button.p{background:var(--acc);color:var(--bg);border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
+.bar{display:flex;justify-content:space-between;align-items:center;margin:8px 0 12px;gap:8px;flex-wrap:wrap}
+.note{color:var(--mute);font-size:13px;margin-top:20px}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;min-width:0}
+details{margin:12px 0;color:var(--mute);font-size:14px}summary{cursor:pointer;color:var(--ink)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.ghost{background:none;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:8px 12px;font:inherit;font-size:14px;cursor:pointer}
+.sitebar{max-width:760px;margin:0 auto;padding:12px 16px 0;font-size:14px;display:flex;gap:16px;flex-wrap:wrap}
+.sitebar a{color:var(--acc)}
+</style>
+</head>
+<body>
+<nav class="sitebar" aria-label="Site"><a href="../../index.html">Slick Jacket Web Rescue</a><a href="../index.html">All free tools</a></nav>
+<main>
+<h1>Subscription Watchdog</h1>
+<p class="sub">Find recurring charges in your bank export. Your file is never uploaded.</p>
+<p class="meta">"How to cancel" and "Add to calendar" open another site: the service's own page, a Google search with that subscription's name, or Google Calendar with its name and renewal date. Nothing is sent unless you click one.</p>
+<label class="drop" id="drop"><input id="f" type="file" accept=".csv,text/csv" hidden>
+<div><b>Choose a CSV</b> or drop it here</div><div class="meta">Export from your bank or card: needs date, description, amount columns</div></label>
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="ghost" onclick="sample()">Try sample data</button><button class="ghost" onclick="backup()">Back up (JSON)</button><label class="ghost">Restore<input type="file" accept=".json" hidden onchange="restore(this.files[0])"></label></div>
+<details><summary>How do I get my CSV?</summary>Log in to your bank or card website, open transactions or statements, pick a 6 to 12 month range, and choose Download or Export as CSV. Most banks offer it.</details>
+<details><summary>Add a subscription manually</summary><div class="form"><input id="mn" placeholder="Name"><input id="ma" type="number" step="0.01" placeholder="Amount"><select id="mf"><option>Monthly</option><option>Weekly</option><option>Quarterly</option><option>Yearly</option></select><input id="md" type="date"></div><button class="p" style="margin-top:8px" onclick="addManual()">Add</button></details>
+<div id="out"></div>
+<p class="note">Private by design: nothing is uploaded or sent anywhere (unless you click "How to cancel" or "Add to calendar"), and results are saved only in this browser. Detection is a best guess, so double-check before cancelling. Not financial advice.</p>
+<p class="note">Made with AI tools by a real person. A free tool from Slick Jacket.</p>
+<p class="note"><a href="../../privacy.html">Privacy</a> &middot; <a href="../index.html">Back to free tools</a></p>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const FREQ=[["Weekly",7,6,8,52/12],["Monthly",30.4,26,35,1],["Quarterly",91,84,98,1/3],["Yearly",365,350,380,1/12]];
+const NOISE=new Set("pos purchase debit credit card visa mc payment recurring online ach pmt check checkcard the inc llc co www com http https".split(" "));
+let subs=[];
+try{const s=localStorage.getItem("sw");if(s){subs=JSON.parse(s);render()}}catch(e){}
+function save(){try{localStorage.setItem("sw",JSON.stringify(subs))}catch(e){}}
+function parseCSV(t){const r=[];let row=[],c="",q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch=='"'){if(t[i+1]=='"'){c+='"';i++}else q=false}else c+=ch}else if(ch=='"')q=true;else if(ch==","){row.push(c);c=""}else if(ch=="\n"||ch=="\r"){if(ch=="\r"&&t[i+1]=="\n")i++;row.push(c);c="";if(row.some(x=>x.trim()))r.push(row);row=[]}else c+=ch}
+row.push(c);if(row.some(x=>x.trim()))r.push(row);return r}
+function pd(s,dayFirst){const m=String(s).trim().match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})/);if(m){const y=+m[3]<100?2000+ +m[3]:+m[3],a=+m[1],b=+m[2];return dayFirst?new Date(y,b-1,a):new Date(y,a-1,b)}return new Date(s)}
+const STATES=new Set("al ak az ar ca co ct de fl ga hi id il in ia ks ky la me md ma mi mn ms mo mt ne nv nh nj nm ny nc nd oh ok or pa ri sc sd tn tx ut vt va wa wv wi wy dc us usa store str".split(" "));
+function key(desc){const w=desc.toLowerCase().replace(/\S*\d\S*/g," ").replace(/[^a-z ]/g," ").split(/\s+/).filter(x=>x.length>1&&!NOISE.has(x)&&!STATES.has(x));return w.slice(0,2).join(" ")}
+function mergeKeys(g){const ks=Object.keys(g);for(const k of ks){if(!g[k]||k.includes(" "))continue;const mk=med(g[k].map(x=>x.a));for(const o of ks){if(o===k||!g[o]||!o.startsWith(k+" "))continue;const mo=med(g[o].map(x=>x.a));if(Math.abs(mo-mk)<=mk*.15){g[k]=g[k].concat(g[o]);delete g[o]}}}return g}
+function med(a){const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2}
+function analyze(text){
+const rows=parseCSV(text);dateInfo=null;parseError=false;if(rows.length<2){parseError=true;alert("No rows found in this file.");return[]}
+const h=rows[0].map(x=>x.toLowerCase());
+let di=h.findIndex(x=>/date/.test(x)),ni=h.findIndex(x=>/desc|merchant|name|payee|memo|detail/.test(x)),ai=h.findIndex(x=>/amount|debit|withdraw/.test(x));
+if(di<0||ni<0||ai<0){parseError=true;alert("Couldn't find date, description and amount columns in the header row.");return[]}
+let dayFirst=false,slash=false;for(const r of rows.slice(1)){const m=String(r[di]).trim().match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-]/);if(m){slash=true;if(+m[1]>12){dayFirst=true;break}}}
+if(slash&&forceOrder)dayFirst=forceOrder==="dm";dateInfo=slash?(dayFirst?"dm":"md"):null;
+const tx=[];let neg=0,pos=0;
+for(const r of rows.slice(1)){const a=parseFloat(String(r[ai]).replace(/[^0-9.\-]/g,""));const d=pd(r[di],dayFirst);if(isNaN(a)||isNaN(d)||!a)continue;a<0?neg++:pos++;tx.push({d,a,n:r[ni]||""})}
+const sp=neg>=pos?-1:1,g={};
+for(const t of tx){if(Math.sign(t.a)!==sp)continue;const k=key(t.n);if(!k)continue;(g[k]=g[k]||[]).push({d:t.d,a:Math.abs(t.a),n:t.n})}
+mergeKeys(g);
+const out=[];
+for(const k in g){const l=g[k].sort((x,y)=>x.d-y.d);if(l.length<2)continue;
+const gaps=[];for(let i=1;i<l.length;i++)gaps.push((l[i].d-l[i-1].d)/864e5);
+const mg=med(gaps),f=FREQ.find(f=>mg>=f[2]&&mg<=f[3]);if(!f)continue;
+const need=f[1]<100?3:2;if(l.length<need)continue;
+const ma=med(l.map(x=>x.a)),ok=l.filter(x=>Math.abs(x.a-ma)<=ma*.15).length;if(ok/l.length<.7)continue;
+const la=l[l.length-1].a,up=la>ma*1.02&&l.slice(0,-1).some(x=>x.a<la*.98);
+const last=l[l.length-1].d,next=new Date(last.getTime()+f[1]*864e5);
+out.push({k,name:k.replace(/\b\w/g,c=>c.toUpperCase()),amt:la,up,freq:f[0],mult:f[4],last:last.toISOString().slice(0,10),next:next.toISOString().slice(0,10),n:l.length,off:false})}
+return out.sort((a,b)=>a.next.localeCompare(b.next))}
+function money(x){return "$"+x.toFixed(2)}
+let forceOrder=null,dateInfo=null,lastText="",parseError=false;
+function switchOrder(){if(!lastText||!dateInfo)return;forceOrder=dateInfo==="dm"?"md":"dm";subs=analyze(lastText);save();render()}
+function dateNote(){return dateInfo?`<div class="meta" id="dn">Dates read as ${dateInfo==="md"?"month/day (e.g. 01/05 = Jan 5)":"day/month (e.g. 01/05 = May 1)"}. <button class="l" onclick="switchOrder()">Switch to ${dateInfo==="md"?"day/month":"month/day"}</button></div>`:""}
+function render(){
+const o=$("#out");if(!subs.length){o.innerHTML=dateNote();return}
+const act=subs.filter(s=>!s.off),mo=act.reduce((t,s)=>t+s.amt*s.mult,0),today=new Date().toISOString().slice(0,10);
+o.innerHTML=dateNote()+`<div class="cards"><div class="card"><small>Subscriptions</small><strong>${act.length}</strong></div><div class="card"><small>Per month</small><strong>${money(mo)}</strong></div><div class="card"><small>Per year</small><strong>${money(mo*12)}</strong></div></div>
+<div class="bar"><b>Detected recurring charges</b><span><button class="p" onclick="expCsv()">Export CSV</button> <button class="l" onclick="clr()">Clear all</button></span></div>`+
+subs.map((s,i)=>{const days=Math.round((new Date(s.next)-new Date(today))/864e5);const w=days<0?"overdue or cancelled?":days<=7?`<span class="soon">in ${days} day${days==1?"":"s"}</span>`:`in ${days} days`;
+return `<div class="row ${s.off?"off":""}"><div class="top"><span>${s.name}</span><span>${money(s.amt)} / ${s.freq.toLowerCase().replace("ly","").replace("quarter","quarter").replace("month","mo").replace("week","wk").replace("year","yr")}</span></div>
+<div class="meta">${s.freq} · ${s.manual?"added manually":s.n+" charges"}${s.up?' · <span class="soon">price went up</span>':""} · next around ${s.next} (${w})</div>
+<div class="act"><a target="_blank" rel="noopener" href="${cancelUrl(s)}">How to cancel</a><a target="_blank" rel="noopener" href="${calUrl(s)}">Add to calendar</a><button class="l" onclick="tog(${i})">${s.off?"Mark active":"Mark cancelled"}</button><button class="l" onclick="del(${i})">Remove</button></div></div>`}).join("")}
+const CANCEL={netflix:"https://www.netflix.com/cancelplan",spotify:"https://www.spotify.com/account/subscription/",hulu:"https://secure.hulu.com/account",disney:"https://www.disneyplus.com/account",youtube:"https://www.youtube.com/paid_memberships",adobe:"https://account.adobe.com/plans",dropbox:"https://www.dropbox.com/account/plan",microsoft:"https://account.microsoft.com/services",audible:"https://www.audible.com/account/overview",amazon:"https://www.amazon.com/gp/primecentral","google one":"https://one.google.com/settings"};
+function cancelUrl(s){const k=Object.keys(CANCEL).find(x=>s.k.includes(x));return k?CANCEL[k]:"https://www.google.com/search?q="+encodeURIComponent("how to cancel "+s.name+" subscription")}
+function calUrl(s){const d=s.next.replace(/-/g,""),e=new Date(new Date(s.next).getTime()+864e5).toISOString().slice(0,10).replace(/-/g,"");const r={Weekly:"WEEKLY",Monthly:"MONTHLY",Quarterly:"MONTHLY;INTERVAL=3",Yearly:"YEARLY"}[s.freq];return "https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(s.name+" renews")+"&dates="+d+"/"+e+"&recur="+encodeURIComponent("RRULE:FREQ="+r)}
+function dl(name,data){try{const t=/\.ics$/.test(name)?"text/calendar":/\.json$/.test(name)?"application/json":"text/csv";const u=URL.createObjectURL(new Blob([data],{type:t+";charset=utf-8"})),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}catch(e){alert("Your browser blocked the download. Try another browser, or use the button again.")}}
+function expCsv(){const q=x=>'"'+String(x).replace(/"/g,'""')+'"';dl("subscriptions.csv","Name,Amount,Frequency,Next charge,Status\n"+subs.map(s=>[q(s.name),s.amt.toFixed(2),s.freq,s.next,s.off?"Cancelled":"Active"].join(",")).join("\n"))}
+function backup(){if(!subs.length){alert("Nothing to back up yet.");return}dl("subscriptions-backup.json",JSON.stringify(subs))}
+function restore(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const a=JSON.parse(r.result);if(!Array.isArray(a)||a.some(x=>!x.name||!x.next||!(x.amt>=0)))throw 0;subs=a;save();render()}catch(e){alert("That doesn't look like a Subscription Watchdog backup.")}};r.readAsText(f)}
+function del(i){subs.splice(i,1);save();render()}
+function addManual(){const n=$("#mn").value.trim(),a=parseFloat($("#ma").value),f=$("#mf").value,d=$("#md").value;if(!n||!(a>0)||!d){alert("Enter a name, an amount and the next charge date.");return}const F=FREQ.find(x=>x[0]===f);subs.push({k:n.toLowerCase(),name:n,amt:a,freq:f,mult:F[4],last:"",next:d,n:1,off:false,manual:true});subs.sort((x,y)=>x.next.localeCompare(y.next));save();render();$("#mn").value=$("#ma").value=""}
+function sample(){const day=[5,12,18,22],nm=["NETFLIX.COM","SPOTIFY USA","PLANET FITNESS","ICLOUD STORAGE"],am=[15.49,11.99,24.99,2.99],now=new Date();let c="Date,Description,Amount\n";for(let m=0;m<6;m++)for(let j=0;j<4;j++){const d=new Date(now.getFullYear(),now.getMonth()-m,day[j]);if(d>now)continue;c+=d.toISOString().slice(0,10)+","+nm[j]+" "+(1000+m*7)+",-"+am[j]+"\n"}c+=new Date(now.getTime()-5*864e5).toISOString().slice(0,10)+",TARGET STORE,-63.20\n";subs=analyze(c);save();render()}
+function tog(i){subs[i].off=!subs[i].off;save();render()}
+function clr(){subs=[];save();render()}
+function ics(){
+const rr={Weekly:"WEEKLY",Monthly:"MONTHLY",Quarterly:"MONTHLY;INTERVAL=3",Yearly:"YEARLY"};
+let s="BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Subscription Watchdog//EN\r\n";
+subs.filter(x=>!x.off).forEach((x,i)=>{const d=x.next.replace(/-/g,"");const e=new Date(new Date(x.next).getTime()+864e5).toISOString().slice(0,10).replace(/-/g,"");
+s+=`BEGIN:VEVENT\r\nUID:sw-${i}-${d}@local\r\nDTSTAMP:${d}T000000Z\r\nDTSTART;VALUE=DATE:${d}\r\nDTEND;VALUE=DATE:${e}\r\nRRULE:FREQ=${rr[x.freq]}\r\nSUMMARY:${x.name} renews (~${money(x.amt)})\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:${x.name} renews soon\r\nTRIGGER:-P3D\r\nEND:VALARM\r\nEND:VEVENT\r\n`});
+s+="END:VCALENDAR";const a=document.createElement("a");a.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(s);a.download="subscription-reminders.ics";a.click()}
+function load(file){if(!file)return;const r=new FileReader();r.onload=()=>{lastText=r.result;forceOrder=null;subs=analyze(r.result);if(!subs.length&&r.result.length>50&&!parseError)alert("No recurring charges found. Try a longer date range.");save();render()};r.readAsText(file)}
+$("#f").onchange=e=>load(e.target.files[0]);
+const dz=$("#drop");
+dz.ondragover=e=>{e.preventDefault();dz.classList.add("on")};
+dz.ondragleave=()=>dz.classList.remove("on");
+dz.ondrop=e=>{e.preventDefault();dz.classList.remove("on");load(e.dataTransfer.files[0])};
+</script>
+</body>
+</html>
