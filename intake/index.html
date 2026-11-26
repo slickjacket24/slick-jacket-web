@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#17191b">
+
+  <title>Web Rescue | Slick Jacket</title>
+  <meta name="description" content="Something wrong with your website? Tell Web Rescue what's happening. Get a free website check before deciding on a $99 flat-rate fix.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Web Rescue | Slick Jacket">
+  <meta property="og:description" content="Tell us what's wrong with your site. We'll take a free look first. Website fixes for $99 flat, with your approval.">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317191b'/%3E%3Cpath d='M35 7 16 35h15l-3 22 21-32H34z' fill='%23e5ad51'/%3E%3C/svg%3E">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #17191b;
+      --surface: #222528;
+      --surface-soft: #2b2e31;
+      --border: #414448;
+      --text: #f4f1e9;
+      --muted: #bcbdbb;
+      --accent: #e5ad51;
+      --accent-hover: #f4c477;
+      --error: #ffaaa3;
+      --success: #a8dfb5;
+      --radius: 16px;
+      --font: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      max-width: 100%;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .container {
+      width: min(100% - 32px, 680px);
+      margin-inline: auto;
+    }
+
+    .site-header {
+      padding: 25px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .brand-icon {
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      border-radius: 8px;
+      color: var(--bg);
+    }
+
+    .hero {
+      padding: 62px 0 44px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      overflow-wrap: break-word;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(42px, 9vw, 65px);
+      line-height: 1.08;
+      letter-spacing: -.055em;
+      font-weight: 800;
+    }
+
+    .hero-description {
+      margin: 0;
+      max-width: 520px;
+      color: var(--muted);
+      font-size: clamp(17px, 4vw, 20px);
+      line-height: 1.65;
+    }
+
+    .price-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .price-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 35px;
+      padding: 5px 13px;
+      border: 1px solid rgba(229,173,81,.5);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .price-explainer {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    section {
+      margin-bottom: 52px;
+    }
+
+    h2 {
+      margin: 0 0 20px;
+      font-size: 23px;
+      line-height: 1.3;
+      letter-spacing: -.025em;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: flex;
+      gap: 17px;
+      padding: 19px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .step-number {
+      flex: 0 0 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: rgba(229,173,81,.12);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .step p {
+      margin: 1px 0 0;
+      font-size: 15px;
+    }
+
+    .form-card {
+      padding: 24px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .form-heading {
+      margin-bottom: 8px;
+    }
+
+    .form-intro {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .required-note {
+      margin: 0 0 25px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .required-mark {
+      color: var(--accent);
+    }
+
+    .field {
+      margin-bottom: 24px;
+    }
+
+    .field > label,
+    .field-label,
+    legend {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .optional {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 12px;
+    }
+
+    input:not([type="checkbox"]),
+    textarea,
+    select {
+      display: block;
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid #62656a;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #a5a6a5;
+      opacity: 1;
+    }
+
+    input:not([type="checkbox"]):focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(229,173,81,.2);
+    }
+
+    input[aria-invalid="true"],
+    textarea[aria-invalid="true"],
+    select[aria-invalid="true"] {
+      border-color: var(--error);
+    }
+
+    textarea {
+      min-height: 145px;
+      resize: vertical;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      padding-right: 42px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23e5ad51' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+    }
+
+    .hint {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .error {
+      display: none;
+      margin: 7px 0 0;
+      color: var(--error);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .error:not(:empty) {
+      display: block;
+    }
+
+    .counter {
+      margin: 6px 0 0;
+      text-align: right;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .counter.ready {
+      color: var(--success);
+    }
+
+    fieldset {
+      min-width: 0;
+      margin: 0 0 26px;
+      padding: 0;
+      border: 0;
+    }
+
+    fieldset legend {
+      padding: 0;
+      margin-bottom: 5px;
+    }
+
+    .checkbox-list {
+      display: grid;
+      gap: 7px;
+      margin-top: 15px;
+    }
+
+    .check-option {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 48px;
+      padding: 10px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: border-color .15s, background .15s;
+    }
+
+    .check-option:hover {
+      border-color: #77736c;
+    }
+
+    .check-option:has(input:checked) {
+      background: rgba(229,173,81,.075);
+      border-color: var(--accent);
+    }
+
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+      flex: 0 0 21px;
+      width: 21px;
+      height: 21px;
+      margin: 0;
+      background: var(--surface-soft);
+      border: 1.5px solid #a0a09c;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 2px;
+      width: 6px;
+      height: 11px;
+      border: solid var(--bg);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    input[type="checkbox"]:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .two-column {
+      display: grid;
+      gap: 0;
+    }
+
+    .consent {
+      margin-top: 7px;
+      margin-bottom: 24px;
+    }
+
+    .consent .check-option {
+      align-items: flex-start;
+      padding: 15px;
+      line-height: 1.55;
+    }
+
+    .consent input {
+      margin-top: 2px;
+    }
+
+    .security-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin: 0 0 23px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .security-note svg {
+      flex: 0 0 19px;
+      margin-top: 2px;
+      color: var(--accent);
+    }
+
+    .security-note p {
+      margin: 0;
+    }
+
+    .submit-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 54px;
+      padding: 13px 18px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--accent);
+      color: #17191b;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background .15s, transform .15s;
+    }
+
+    .submit-button:hover:not(:disabled) {
+      background: var(--accent-hover);
+    }
+
+    .submit-button:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .submit-button:disabled {
+      cursor: wait;
+      opacity: .7;
+    }
+
+    .form-status {
+      margin: 0 0 16px;
+      padding: 13px 15px;
+      border: 1px solid var(--error);
+      border-radius: 10px;
+      color: var(--error);
+      font-size: 14px;
+    }
+
+    .form-status:empty {
+      display: none;
+    }
+
+    .retry-button {
+      min-height: 44px;
+      padding: 8px 15px;
+      margin-top: 12px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .retry-button:hover {
+      border-color: var(--accent);
+    }
+
+    .submit-footnote {
+      margin: 12px 0 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .honeypot {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .success-card {
+      padding: 30px 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .success-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 22px;
+      border-radius: 13px;
+      background: rgba(168,223,181,.12);
+      color: var(--success);
+    }
+
+    .success-card h2 {
+      font-size: 25px;
+      line-height: 1.35;
+    }
+
+    .success-card > p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .summary {
+      margin-top: 25px;
+      padding: 18px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .summary h3 {
+      margin: 0 0 15px;
+      font-size: 15px;
+    }
+
+    .summary dl {
+      margin: 0;
+    }
+
+    .summary dt {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .summary dt:first-child {
+      margin-top: 0;
+    }
+
+    .summary dd {
+      margin: 3px 0 0;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+      font-size: 14px;
+    }
+
+    .faq {
+      margin-top: 50px;
+    }
+
+    .faq details {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq details:first-of-type {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      min-height: 60px;
+      padding: 17px 3px;
+      cursor: pointer;
+      list-style: none;
+      font-weight: 650;
+      font-size: 14px;
+    }
+
+    .faq summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq summary::after {
+      content: "+";
+      flex: 0 0 20px;
+      text-align: center;
+      color: var(--accent);
+      font-size: 23px;
+      font-weight: 400;
+    }
+
+    .faq details[open] summary::after {
+      content: "−";
+    }
+
+    .faq details p {
+      margin: 0;
+      padding: 0 30px 20px 3px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer {
+      margin-top: 65px;
+      padding: 25px 0 35px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (min-width: 600px) {
+      .hero {
+        padding-top: 85px;
+      }
+
+      .form-card {
+        padding: 35px;
+      }
+
+      .two-column {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .success-card {
+        padding: 38px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand" aria-label="Slick Jacket">
+        <span class="brand-icon" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+            <path d="M13 2 4 13h8l-1 9 9-13h-8l1-7Z"
+              fill="currentColor"/>
+          </svg>
+        </span>
+        Slick Jacket
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">Website help, without the hassle</p>
+      <h1 id="page-title">Web Rescue<span style="color:var(--accent)">.</span></h1>
+      <p class="hero-description">
+        Tell us what's wrong with your site. We'll take a free look first.
+      </p>
+
+      <div class="price-line">
+        <span class="price-pill">$99 flat fix</span>
+        <span class="price-explainer">Free check first. No payment today.</span>
+      </div>
+    </section>
+
+    <section aria-labelledby="how-title">
+      <h2 id="how-title">How it works</h2>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step-number" aria-hidden="true">1</span>
+          <p>Send your site and what's bugging you.</p>
+        </div>
+
+        <div class="step">
+          <span class="step-number" aria-hidden="true">2</span>
+          <p>
+            We do a free check and reply within 2 business days
+            with what we found and what we'd fix.
+          </p>
+        </div>
+
+        <div class="step">
+          <span class="step-number" aria-hidden="true">3</span>
+          <p>
+            If you want the fix, it's a Single fix — $99 flat, paid in advance.
+            If we can't fix it, you don't pay. If we don't complete the fix we agreed to in writing, there's no charge, and if you've already paid, we refund you in full.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="intake-section" aria-labelledby="form-title">
+
+      <div class="form-card" id="form-card">
+        <h2 id="form-title" class="form-heading">Tell us about your website</h2>
+        <p class="form-intro">
+          A few details help us know where to start.
+        </p>
+        <p class="required-note">
+          Fields marked <span class="required-mark">*</span> are required.
+        </p>
+
+        <form id="intake-form" novalidate>
+
+          <div class="field">
+            <label for="client-name">
+              Your name <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="client-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              maxlength="120"
+              placeholder="What should we call you?"
+              required
+              aria-required="true"
+              aria-describedby="name-error"
+            >
+            <p class="error" id="name-error" aria-live="polite" aria-atomic="true"></p>
+          </div>
+
+          <div class="field">
+            <label for="business-name">
+              Business name <span class="optional">(optional)</span>
+            </label>
+            <input
+              id="business-name"
+              name="businessName"
+              type="text"
+              autocomplete="organization"
+              maxlength="160"
+              placeholder="Your business or organization"
+            >
+          </div>
+
+          <div class="field">
+            <label for="client-email">
+              Email to reply to
+              <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="client-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              inputmode="email"
+              maxlength="254"
+              placeholder="you@example.com"
+              required
+              aria-required="true"
+              aria-describedby="email-error"
+            >
+            <p class="error" id="email-error" aria-live="polite" aria-atomic="true"></p>
+          </div>
+
+          <div class="field">
+            <label for="website">
+              Website address
+              <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="website"
+              name="website"
+              type="text"
+              inputmode="url"
+              autocomplete="url"
+              maxlength="2048"
+              placeholder="example.com"
+              required
+              aria-required="true"
+              aria-describedby="website-hint website-error"
+            >
+            <p class="hint" id="website-hint">
+              You can enter your site with or without https://
+            </p>
+            <p class="error" id="website-error" aria-live="polite" aria-atomic="true"></p>
+          </div>
+
+          <fieldset>
+            <legend>What's wrong?</legend>
+            <p class="hint">Choose anything that sounds familiar.</p>
+
+            <div class="checkbox-list">
+
+              <label class="check-option">
+                <input type="checkbox" name="issues" value="Looks broken on phones">
+                <span>Looks broken on phones</span>
+              </label>
+
+              <label class="check-option">
+                <input type="checkbox" name="issues" value="Slow to load">
+                <span>Slow to load</span>
+              </label>
+
+              <label class="check-option">
+                <input type="checkbox" name="issues" value="Contact form not working">
+                <span>Contact form not working</span>
+              </label>
+
+              <label class="check-option">
+                <input type="checkbox" name="issues" value="Hard to read or find things">
+                <span>Hard to read or find things</span>
+              </label>
+
+              <label class="check-option">
+                <input type="checkbox" name="issues" value="Broken links or images">
+                <span>Broken links or images</span>
+              </label>
+
+              <label class="check-option">
+                <input type="checkbox" name="issues" value="Outdated info">
+                <span>Outdated info</span>
+              </label>
+
+              <label class="check-option">
+                <input type="checkbox" name="issues" value="Not sure, just looks off">
+                <span>Not sure, just looks off</span>
+              </label>
+
+              <label class="check-option">
+                <input type="checkbox" name="issues" value="Other">
+                <span>Other</span>
+              </label>
+
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label for="details">
+              Tell us more
+              <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+            <textarea
+              id="details"
+              name="details"
+              minlength="20"
+              maxlength="5000"
+              placeholder="Tell us what you've noticed, what isn't working, or what you'd like to improve."
+              required
+              aria-required="true"
+              aria-describedby="details-hint details-counter details-error"
+            ></textarea>
+            <p class="hint" id="details-hint">
+              Just explain it in your own words. A sentence or two is plenty.
+            </p>
+            <p class="counter" id="details-counter" aria-live="off">
+              0 / 20 characters
+            </p>
+            <p class="error" id="details-error" aria-live="polite" aria-atomic="true"></p>
+          </div>
+
+          <div class="field">
+            <label for="pages">
+              Which pages? <span class="optional">(optional)</span>
+            </label>
+            <input
+              id="pages"
+              name="pages"
+              type="text"
+              maxlength="1000"
+              placeholder="Homepage, contact page, etc."
+            >
+            <p class="hint">
+              Leave this blank if you're not sure.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="field">
+              <label for="timeline">How soon do you need it?</label>
+              <select id="timeline" name="timeline">
+                <option value="No rush">No rush</option>
+                <option value="Within a week">Within a week</option>
+                <option value="ASAP">ASAP</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="platform">Platform, if known</label>
+              <select id="platform" name="platform">
+                <option value="Not sure">Not sure</option>
+                <option value="WordPress">WordPress</option>
+                <option value="Wix">Wix</option>
+                <option value="Squarespace">Squarespace</option>
+                <option value="Shopify">Shopify</option>
+                <option value="GoDaddy">GoDaddy</option>
+                <option value="Custom">Custom</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="consent">
+            <label class="check-option">
+              <input
+                id="consent"
+                name="consent"
+                type="checkbox"
+                required
+                aria-required="true"
+                aria-describedby="consent-error"
+              >
+              <span>
+                I own this site or have permission to request changes
+                to it. <span class="required-mark" aria-hidden="true">*</span>
+              </span>
+            </label>
+            <p class="error" id="consent-error" aria-live="polite" aria-atomic="true"></p>
+          </div>
+
+          <!-- Spam trap: real visitors should never see or fill this. -->
+          <div class="honeypot" aria-hidden="true">
+            <label for="company-website-check">Leave this field empty</label>
+            <input
+              id="company-website-check"
+              name="companyWebsiteCheck"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+            >
+          </div>
+
+          <div class="security-note">
+            <svg
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="4" y="10" width="16" height="11" rx="2"/>
+              <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+              <path d="M12 14v3"/>
+            </svg>
+            <p>
+              Access is by a user or collaborator invite only, and we never ask for your passwords.
+            </p>
+          </div>
+
+          <div
+            id="form-status"
+            class="form-status"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            tabindex="-1"
+          ></div>
+
+          <button
+            id="submit-button"
+            class="submit-button"
+            type="submit"
+          >
+            <span id="submit-label">Send for my free check</span>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14m-6-6 6 6-6 6"/>
+            </svg>
+          </button>
+
+          <p class="submit-footnote">
+            The first check is free. No payment or commitment needed.
+          </p>
+
+        </form>
+      </div>
+
+      <div
+        id="success-card"
+        class="success-card"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        tabindex="-1"
+        hidden
+      >
+        <div class="success-icon" aria-hidden="true">
+          <svg
+            width="27"
+            height="27"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m5 12 5 5L20 7"/>
+          </svg>
+        </div>
+
+        <h2 id="success-title">
+          Got it. We'll look at your site and reply within 2 business days.
+        </h2>
+
+        <p>
+          Thanks for taking the time to explain what's going on.
+          We'll review what you sent and let you know what we find.
+        </p>
+
+        <div class="summary">
+          <h3>Here's what you sent</h3>
+          <dl id="submission-summary"></dl>
+        </div>
+
+        <p>
+          Nothing needs to be paid for this first check.
+        </p>
+      </div>
+
+    </section>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">A few common questions</h2>
+
+      <details>
+        <summary>What does $99 cover?</summary>
+        <p>
+          The $99 covers a written scope before any work starts and the one fix described in that scope. That can be a broken link or form, a typo, wrong hours or contact details, or a layout bug. We'll explain what's included before you decide.
+        </p>
+      </details>
+
+      <details>
+        <summary>What if it needs more than $99 of work?</summary>
+        <p>
+          We'll tell you first and explain what we found. You decide
+          whether you want to move forward. Nothing extra happens
+          without your OK.
+        </p>
+      </details>
+
+      <details>
+        <summary>Do you need my password?</summary>
+        <p>
+          No. We don't need passwords to do the initial check. Access is by a user or collaborator invite only, and we never ask for your passwords.
+        </p>
+      </details>
+
+      <details>
+        <summary>How long does the fix take?</summary>
+        <p>
+          A single fix, fix bundle or accessibility check + top fixes takes 3-5 business days, and a new site about 1-2 weeks, counted from when we have your content. A look-and-report or accessibility check is delivered 2 business days after payment. Turnaround starts once we have your content and your payment.
+        </p>
+      </details>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      &copy; <span id="copyright-year"></span>
+      Slick Jacket &middot; Web Rescue
+      &middot; <a href="mailto:slickjacketweb@mail.grokbot.com">slickjacketweb@mail.grokbot.com</a>
+      &middot; Made with AI tools by a real person.
+    </div>
+  </footer>
+
+  <script>
+    "use strict";
+
+    // CONFIGURATION
+    // Leave blank for local testing.
+    // Set to a trusted HTTPS JSON intake endpoint when ready.
+    const FORM_ENDPOINT = "https://web-rescue-intake-private-11051871.base44.app/api/intake-submit";
+
+    const TEST_STORAGE_KEY = "webRescueIntakeTest";
+
+    const form = document.getElementById("intake-form");
+    const formCard = document.getElementById("form-card");
+    const successCard = document.getElementById("success-card");
+    const summary = document.getElementById("submission-summary");
+    const statusBox = document.getElementById("form-status");
+    const submitButton = document.getElementById("submit-button");
+    const submitLabel = document.getElementById("submit-label");
+
+    const nameInput = document.getElementById("client-name");
+    const emailInput = document.getElementById("client-email");
+    const websiteInput = document.getElementById("website");
+    const detailsInput = document.getElementById("details");
+    const consentInput = document.getElementById("consent");
+    const counter = document.getElementById("details-counter");
+
+    let isSubmitting = false;
+    let hasSubmitted = false;
+
+    document.getElementById("copyright-year").textContent =
+      new Date().getFullYear();
+
+    function normalizeWebsite(value) {
+      const raw = value.trim();
+
+      if (!raw) return "";
+
+      if (/\s/.test(raw)) return null;
+
+      // Reject explicit schemes other than HTTP or HTTPS.
+      if (/^[a-z][a-z0-9+.-]*:/i.test(raw) &&
+          !/^https?:\/\//i.test(raw)) {
+        return null;
+      }
+
+      const candidate = /^https?:\/\//i.test(raw)
+        ? raw
+        : "https://" + raw;
+
+      try {
+        const url = new URL(candidate);
+
+        if (url.protocol !== "https:" && url.protocol !== "http:") {
+          return null;
+        }
+
+        if (url.username || url.password) {
+          return null;
+        }
+
+        const hostname = url.hostname.toLowerCase();
+
+        // Require a plausible public domain or IP address.
+        // Localhost, private IPs and internal hostnames are excluded.
+        const domainPattern =
+          /^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z](?:[a-z0-9-]{0,61}[a-z0-9])$/i;
+
+        const ipv4Pattern =
+          /^(?:\d{1,3}\.){3}\d{1,3}$/;
+
+        const isIPv4 = ipv4Pattern.test(hostname);
+
+        if (!domainPattern.test(hostname) && !isIPv4) {
+          return null;
+        }
+
+        if (isIPv4) {
+          const octets = hostname.split(".").map(Number);
+
+          if (octets.some(n => n > 255)) return null;
+
+          // Exclude non-public address ranges.
+          const a = octets[0];
+          const b = octets[1];
+
+          if (
+            a === 0 ||
+            a === 10 ||
+            a === 127 ||
+            a >= 224 ||
+            (a === 100 && b >= 64 && b <= 127) ||
+            (a === 169 && b === 254) ||
+            (a === 172 && b >= 16 && b <= 31) ||
+            (a === 192 && b === 168) ||
+            (a === 192 && b === 0 && octets[2] === 0) ||
+            (a === 192 && b === 0 && octets[2] === 2) ||
+            (a === 198 && (b === 18 || b === 19)) ||
+            (a === 198 && b === 51 && octets[2] === 100) ||
+            (a === 203 && b === 0 && octets[2] === 113)
+          ) {
+            return null;
+          }
+        } else {
+          const forbiddenEndings =
+            /\.(?:local|localhost|internal|test|invalid|example)$/i;
+
+          if (
+            forbiddenEndings.test(hostname) ||
+            hostname.endsWith(".onion")
+          ) {
+            return null;
+          }
+        }
+
+        // Normalize the URL through the browser URL parser.
+        return url.href;
+
+      } catch {
+        return null;
+      }
+    }
+
+    function getErrorElement(field) {
+      const ids = {
+        "client-name": "name-error",
+        "client-email": "email-error",
+        "website": "website-error",
+        "details": "details-error",
+        "consent": "consent-error"
+      };
+
+      return document.getElementById(ids[field.id] || "");
+    }
+
+    function showFieldError(field, message) {
+      const errorElement = getErrorElement(field);
+
+      if (!errorElement) return;
+
+      errorElement.textContent = message;
+
+      if (message) {
+        field.setAttribute("aria-invalid", "true");
+      } else {
+        field.removeAttribute("aria-invalid");
+      }
+    }
+
+    function validateField(field) {
+      let error = "";
+
+      switch (field.id) {
+
+        case "client-name":
+          if (!field.value.trim()) {
+            error = "Please enter your name.";
+          }
+          break;
+
+        case "client-email": {
+          const email = field.value.trim();
+
+          if (!email) {
+            error = "Please enter an email address so we can reply.";
+          } else {
+            const emailPattern =
+              /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (
+              !emailPattern.test(email) ||
+              !field.validity.valid
+            ) {
+              error = "Please enter a valid email address.";
+            }
+          }
+          break;
+        }
+
+        case "website":
+          if (!field.value.trim()) {
+            error = "Please enter your website address.";
+          } else if (!normalizeWebsite(field.value)) {
+            error = "Please enter a valid public website address, like example.com.";
+          }
+          break;
+
+        case "details":
+          if (!field.value.trim()) {
+            error = "Please tell us a little about what's wrong.";
+          } else if (field.value.trim().length < 20) {
+            error = "Please add a little more, at least 20 characters, so we know what to look at.";
+          }
+          break;
+
+        case "consent":
+          if (!field.checked) {
+            error = "Please confirm you have permission to request changes.";
+          }
+          break;
+      }
+
+      showFieldError(field, error);
+
+      return !error;
+    }
+
+    const validatedFields = [
+      nameInput,
+      emailInput,
+      websiteInput,
+      detailsInput,
+      consentInput
+    ];
+
+    validatedFields.forEach(field => {
+      field.addEventListener("blur", () => {
+        validateField(field);
+      });
+
+      const eventName = field.type === "checkbox"
+        ? "change"
+        : "input";
+
+      field.addEventListener(eventName, () => {
+        if (field.getAttribute("aria-invalid") === "true") {
+          validateField(field);
+        }
+
+        if (statusBox.textContent.trim()) {
+          clearStatus();
+        }
+      });
+    });
+
+    function updateCounter() {
+      const length = detailsInput.value.trim().length;
+      const remaining = Math.max(0, 20 - length);
+
+      counter.textContent = length >= 20
+        ? length + " characters"
+        : length + " / 20 characters";
+
+      counter.classList.toggle("ready", length >= 20);
+    }
+
+    detailsInput.addEventListener("input", updateCounter);
+    updateCounter();
+
+    websiteInput.addEventListener("blur", () => {
+      const normalized = normalizeWebsite(websiteInput.value);
+
+      if (normalized) {
+        websiteInput.value = normalized;
+      }
+    });
+
+    function validateForm() {
+      let firstInvalid = null;
+
+      validatedFields.forEach(field => {
+        if (!validateField(field) && !firstInvalid) {
+          firstInvalid = field;
+        }
+      });
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return false;
+      }
+
+      return true;
+    }
+
+    function buildPayload() {
+      const checkedIssues = Array.from(
+        form.querySelectorAll('input[name="issues"]:checked')
+      ).map(input => input.value);
+
+      return {
+        name: nameInput.value.trim(),
+        businessName: document.getElementById("business-name").value.trim(),
+        email: emailInput.value.trim(),
+        website: normalizeWebsite(websiteInput.value),
+        issues: checkedIssues,
+        details: detailsInput.value.trim(),
+        pages: document.getElementById("pages").value.trim(),
+        timeline: document.getElementById("timeline").value,
+        platform: document.getElementById("platform").value,
+        consent: consentInput.checked,
+        submittedAt: new Date().toISOString(),
+        source: "web-rescue-intake"
+      };
+    }
+
+    function setSubmitting(value) {
+      isSubmitting = value;
+      submitButton.disabled = value;
+      submitButton.setAttribute("aria-busy", String(value));
+
+      submitLabel.textContent = value
+        ? "Sending..."
+        : "Send for my free check";
+    }
+
+    function clearStatus() {
+      statusBox.replaceChildren();
+    }
+
+    function showUnableToSend() {
+      clearStatus();
+
+      const message = document.createElement("p");
+      message.style.margin = "0";
+      message.append(
+        "This form isn't able to send your request yet. Please email "
+      );
+
+      const link = document.createElement("a");
+      link.href = "mailto:slickjacketweb@mail.grokbot.com";
+      link.textContent = "slickjacketweb@mail.grokbot.com";
+      message.append(link);
+      message.append(" instead.");
+
+      statusBox.append(message);
+      statusBox.focus();
+    }
+
+    function showSubmissionError() {
+      clearStatus();
+
+      const message = document.createElement("p");
+      message.textContent =
+        "Something went wrong while sending your request. " +
+        "Your answers are still here. Please try again, or email slickjacketweb@mail.grokbot.com.";
+
+      message.style.margin = "0";
+
+      const retry = document.createElement("button");
+      retry.type = "button";
+      retry.className = "retry-button";
+      retry.textContent = "Try sending again";
+
+      retry.addEventListener("click", () => {
+        form.requestSubmit();
+      });
+
+      statusBox.append(message, retry);
+      statusBox.focus();
+    }
+
+    function addSummaryItem(label, value) {
+      const dt = document.createElement("dt");
+      const dd = document.createElement("dd");
+
+      dt.textContent = label;
+      dd.textContent = value || "Not provided";
+
+      summary.append(dt, dd);
+    }
+
+    function showSuccess(payload) {
+      hasSubmitted = true;
+
+      summary.replaceChildren();
+
+      addSummaryItem("Name", payload.name);
+
+      if (payload.businessName) {
+        addSummaryItem("Business", payload.businessName);
+      }
+
+      addSummaryItem("Reply email", payload.email);
+      addSummaryItem("Website", payload.website);
+
+      addSummaryItem(
+        "Issues",
+        payload.issues.length
+          ? payload.issues.join(", ")
+          : "Described below"
+      );
+
+      addSummaryItem("Details", payload.details);
+
+      if (payload.pages) {
+        addSummaryItem("Pages", payload.pages);
+      }
+
+      addSummaryItem("Timeline", payload.timeline);
+      addSummaryItem("Platform", payload.platform);
+
+      formCard.hidden = true;
+      successCard.hidden = false;
+
+      successCard.focus({ preventScroll: true });
+      successCard.scrollIntoView({
+        behavior: window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches ? "auto" : "smooth",
+        block: "start"
+      });
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      if (isSubmitting || hasSubmitted) return;
+
+      // Silently ignore automated spam submissions.
+      const honeypot = document.getElementById(
+        "company-website-check"
+      );
+
+      if (honeypot.value.trim()) {
+        return;
+      }
+
+      clearStatus();
+
+      if (!validateForm()) return;
+
+      const payload = buildPayload();
+
+      setSubmitting(true);
+
+      try {
+        if (FORM_ENDPOINT.trim()) {
+          const response = await fetch(FORM_ENDPOINT.trim(), {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload),
+            mode: "cors",
+            credentials: "omit",
+            cache: "no-store",
+            redirect: "error"
+          });
+
+          if (!response.ok) {
+            throw new Error("Submission failed");
+          }
+
+          showSuccess(payload);
+
+        } else {
+          showUnableToSend();
+        }
+
+      } catch {
+        showSubmissionError();
+
+      } finally {
+        setSubmitting(false);
+      }
+    });
+  </script>
+</body>
+</html>
